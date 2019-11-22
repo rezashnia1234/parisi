@@ -6,7 +6,7 @@
 
     <name>PTP Test</name>
     <description></description>
-    <preference name="phonegap-version" 		value="cli-7.1.0" />
+    <preference name="phonegap-version" 		value="cli-9.0.0" />
     <preference name="fullscreen" 				value="true"/>
     <preference name="permissions"			 	value="none"/>
 	<preference name="orientation"				value="landscape" />
@@ -18,7 +18,7 @@
 	<preference name="exit-on-suspend"					value="false" />			<!-- ios: if set to true, app will terminate when home button is pressed -->
 	<preference name="AutoHideSplashScreen"				value="true" />
 	<preference name="disable-cursor"					value="false" />			<!-- blackberry: prevents a mouse-icon/cursor from being displayed on the app -->
-	<preference name="android-minSdkVersion"			value="28" />				<!-- android: MIN SDK version supported on the target device. MAX version is blank by default. -->
+	<preference name="android-minSdkVersion"			value="24" />				<!-- android: MIN SDK version supported on the target device. MAX version is blank by default. -->
 	<preference name="android-installLocation"			value="auto" />				<!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
 	<preference name="SplashScreenDelay"				value="5000"/>
 	<preference name="FadeSplashScreen"					value="false" />
@@ -26,28 +26,7 @@
 	<preference name="AllowInlineMediaPlayback"			value="true" />
 	<preference name="MediaPlaybackRequiresUserAction"	value="false"/>
 
-    <preference name="BackupWebStorage" value="none" />
-    <!-- <preference name="DisallowOverscroll" value="false" /> -->
-    <preference name="EnableViewportScale" value="false" />
-    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
-    <preference name="SuppressesIncrementalRendering" value="false" />
-    <preference name="SuppressesLongPressGesture" value="false" />
-    <preference name="Suppresses3DTouchGesture" value="false" />
-    <preference name="GapBetweenPages" value="0" />
-    <preference name="PageLength" value="0" />
-    <preference name="PaginationBreakingMode" value="page" />
-    <preference name="PaginationMode" value="unpaginated" />
-    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
-    <!-- <preference name="StatusBarOverlaysWebView" value="true" /> -->
-    <!-- <preference name="StatusBarStyle" value="lightcontent" /> -->
-    <preference name="ScrollEnabled" value="false" />
-    <preference name="SplashMaintainAspectRatio" value="true" />
-    <!-- <preference name="AutoHideSplashScreen" value="false" /> -->
-    <!-- <preference name="SplashScreenDelay" value="10000" /> -->
-    <!-- <preference name="FadeSplashScreenDuration" value="1000" /> -->
-    <preference name="SplashScreen" value="screen" />
-    <preference name="ShowSplashScreen" value="true" />
-    <preference name="SplashShowOnlyFirstTime" value="false" />
+
 	<!-- ???????????????????????????????????????????????????????????????????????????????????? -->
 	<!-- ???????????????????????????????????????????????????????????????????????????????????? -->
 	<!-- ???????????????????????????????????????????????????????????????????????????????????? -->
