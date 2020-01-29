@@ -59,6 +59,7 @@
 
 	<preference name="android-build-tool" value="gradle" />
 
+	<plugin spec="https://github.com/gbenvenuti/cordova-plugin-screen-orientation.git" source="git" />
 	<plugin spec="https://github.com/Paldom/UniqueDeviceID.git" source="git" />
 	<plugin spec="https://github.com/apache/cordova-plugin-statusbar.git " source="git" />
 	<gap:config-file platform="ios" parent="UIStatusBarHidden">
