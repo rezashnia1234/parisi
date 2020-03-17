@@ -64,7 +64,7 @@ var fileName  = "www.zip";
 var uriString = "http://demo.panotools.eu/temp/www.zip";
 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
 	window.localStorage.setItem('download_address',fileSystem.root.toURL());
-	alert(window.localStorage.getItem('download_address'));
+	//alert(window.localStorage.getItem('download_address'));
 	
 	fileSystem.root.getFile(fileName, { create: true }, function (newFile) {
 		downloadFile(uriString, newFile);
@@ -97,7 +97,10 @@ downloadFile = function(uriString, targetFile) {
 	var complete = function() {
 		lblProgress.innerHTML = 'Done';
 										zip.unzip( window.localStorage.getItem('download_address') + '/www.zip', window.localStorage.getItem('download_address') + '/', function(d) {
-										   alert(d); 
+											alert(d);
+											var target = window.localStorage.getItem('download_address') + "/" + "vtour-locale.html";
+											alert(target);
+											window.location.href=target;
 										}, function(d) {
 										   document.getElementById('progressbar').innerHTML = Math.round((progressEvent.loaded / progressEvent.total) * 100);
 										});
