@@ -98,6 +98,7 @@
 				//download_file('http://demo.panotools.eu/temp/www.zip','panos');
 				var fileName  = "www.zip";
 				var uriString = "https://panotools.eu/temp/www.zip";
+				var uriString = "http://192.168.0.25/www.zip";
 				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
 					window.localStorage.setItem('download_address',fileSystem.root.toURL());
 					//alert(window.localStorage.getItem('download_address'));
@@ -134,8 +135,9 @@
 						$('#text').html("Extracting...");
 						var StatusCallback = function(status){
 							if(status == 0){
-								alert("Extracting is finished");
 								/*
+								alert("Extracting is finished");
+								*/
 								cordova.plugins.backgroundMode.disable();
 								cordova.plugins.backgroundMode.setEnabled(false);
 
@@ -143,7 +145,6 @@
 								var target = window.localStorage.getItem('download_address') + "/" + "vtour-locale.html";
 								//alert(target);
 								window.location.href=target;
-								*/
 							}else if(status == -1){
 								$('#text').html("Please re-try");
 							}
@@ -170,7 +171,7 @@
 
 						var downloader = new BackgroundTransfer.BackgroundDownloader();
 						// Create a new download operation.
-						var download = downloader.createDownload(uriString, targetFile,,'Ballenesque 360/vr');
+						var download = downloader.createDownload(uriString, targetFile,'Ballenesque 360/vr','Ballenesque 360/vr');
 						// Start the download and persist the promise to be able to cancel the download.
 						downloadPromise = download.startAsync().then(complete, error, progress);
 

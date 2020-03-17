@@ -40,14 +40,15 @@
 				//document.getElementById("gyro").innerHTML = "786" + "<br/>" + document.getElementById("gyro").innerHTML;
 
 				navigator.splashscreen.hide();
+				
 				if(window.localStorage.getItem('download_done') == null){
 					var target = "download.html";
 					window.location.href=target;
 				}else{
-					alert("test 1 : " + cordova.plugins.backgroundMode.isActive(););
+					alert(cordova.plugins.backgroundMode.isActive());
 					cordova.plugins.backgroundMode.disable();
 					cordova.plugins.backgroundMode.setEnabled(false);
-					alert("test 2 : " + cordova.plugins.backgroundMode.isActive(););
+					alert(cordova.plugins.backgroundMode.isActive());
 					var target = window.localStorage.getItem('download_address') + "/" + "vtour-locale.html";
 					window.location.href=target;
 				}
@@ -204,9 +205,11 @@ downloadFile = function(uriString, targetFile) {
 	<div id="pre_load" ></div>
 	<div id="center">
 		<div id="gyro"></div>
+		<!--
 		<p id="lblProgress">0%</p>
 		<p id="lblFileInfo"></p>
 		<p id="progressbar">---</p>
+		-->
 	</div>	
 </body>
 </html>
