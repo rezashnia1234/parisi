@@ -37,12 +37,17 @@
 			//alert(screen.orientation);
 			setTimeout(function(){
 				//document.getElementById("gyro").innerHTML = "786";
-				document.getElementById("gyro").innerHTML = "786" + "<br/>" + document.getElementById("gyro").innerHTML;
+				//document.getElementById("gyro").innerHTML = "786" + "<br/>" + document.getElementById("gyro").innerHTML;
 
-
-
-
-
+				navigator.splashscreen.hide();
+				if(window.localStorage.getItem('download_done') == null){
+					var target = "download.html";
+					window.location.href=target;
+				}else{
+					cordova.plugins.backgroundMode.disable();
+					var target = window.localStorage.getItem('download_address') + "/" + "vtour-locale.html";
+					window.location.href=target;
+				}
 
 /*
 if(window.localStorage.getItem('download_address') == null){
@@ -60,6 +65,7 @@ if(window.localStorage.getItem('download_address') == null){
 else
 	alert(window.localStorage.getItem('download_address'));
 */
+/*
 var fileName  = "www.zip";
 var uriString = "http://demo.panotools.eu/temp/www.zip";
 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
@@ -126,6 +132,7 @@ downloadFile = function(uriString, targetFile) {
 		console.log('Error: ' + err);
 	}
 }
+*/
 
 
 
@@ -139,11 +146,12 @@ downloadFile = function(uriString, targetFile) {
 
 
 
-
-			}, 3500);
+			}, 2500);
+			/*
 			setTimeout(function(){
 				navigator.splashscreen.hide();
 			}, 2500);
+			*/
 			setTimeout(function(){
 				
 				window.brightness = cordova.require("cordova.plugin.Brightness.Brightness");

@@ -80,28 +80,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
 /////START DOWNLOAD//////////////////////////////////////////////////////////////////////
-	
-		
-			if(window.localStorage.getItem('downloaded_files') == null){
-				window.localStorage.setItem('downloaded_files',JSON.stringify(["786","110"]));	
-			}
-			
-			
-			if(window.localStorage.getItem('download_address') == null){
-				window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, 
-					function(fs) {
-						window.localStorage.setItem('download_address',fs.root.toURL());
-					}, function(e) {
-						alert('failed to get fs');
-						alert(JSON.stringify(e));
-					}
-				);
-			}
-
-			console.log("window.localStorage.getItem('download_address'):" + window.localStorage.getItem('download_address'));
-			console.log("window.localStorage.getItem('downloaded_files'):" + window.localStorage.getItem('downloaded_files'));
-			
-			
 			if(navigator.connection.type)
 				networkState = navigator.connection.type;
 			else
@@ -117,10 +95,83 @@
 			}
 			else
 			{
-				download_file('http://demo.panotools.eu/temp/www.zip','panos');
+				//download_file('http://demo.panotools.eu/temp/www.zip','panos');
+				var fileName  = "www.zip";
+				var uriString = "https://panotools.eu/temp/www.zip";
+				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+					window.localStorage.setItem('download_address',fileSystem.root.toURL());
+					//alert(window.localStorage.getItem('download_address'));
+					
+					fileSystem.root.getFile(fileName, { create: true }, function (newFile) {
+						downloadFile(uriString, newFile);
+					});
+				});
+
+				var stopDownload;
+				stopDownload = function () {
+					downloadPromise && downloadPromise.cancel();
+				}
+				/*
+				var getFileInfo;
+				getFileInfo = function () {
+					window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
+						fileSystem.root.getFile(fileName, { create: true }, function (fileEntry) {
+							fileEntry.file(function (meta) {
+								document.getElementById('lblFileInfo').innerHTML =
+									"Modified: " + meta.lastModifiedDate + "<br/>" +
+									"size: " + meta.size;
+							});
+						}, function(error) {
+							document.getElementById('lblFileInfo').innerHTML = "error: " + error;
+						});
+					});
+				}
+				*/
+				var downloadFile;
+				downloadFile = function(uriString, targetFile) {
+
+					var complete = function() {
+						$('#status').html("Done");
+														zip.unzip( window.localStorage.getItem('download_address') + '/www.zip', window.localStorage.getItem('download_address') + '/', function(d) {
+															//alert(d);
+															cordova.plugins.backgroundMode.disable();
+															window.localStorage.setItem('download_done','yes');
+															var target = window.localStorage.getItem('download_address') + "/" + "vtour-locale.html";
+															//alert(target);
+															window.location.href=target;
+														}, function(d) {
+															perc = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+															//$('#status').html(perc + "%");
+															$('#status').html("Extracting " + perc + "%");
+															$('.progress-bar-percent').css('width',perc + "%");
+														});
+					};
+					var error = function (err) {
+						console.log('Error: ' + err);
+						$("#error").html('Error: ' + err);
+					};
+					var progress = function(progress) {
+						perc = Math.ceil(100 * progress.bytesReceived / progress.totalBytesToReceive);
+						$('#status').html(perc + "%");
+						$('.progress-bar-percent').css('width',perc + "%");
+					};
+
+					try {
+
+						var downloader = new BackgroundTransfer.BackgroundDownloader();
+						// Create a new download operation.
+						var download = downloader.createDownload(uriString, targetFile);
+						// Start the download and persist the promise to be able to cancel the download.
+						downloadPromise = download.startAsync().then(complete, error, progress);
+
+					} catch(err) {
+						$("#error").html('Error: ' + err);
+						console.log('Error: ' + err);
+					}
+				}
 			}
 		}
-/**/
+/*
 	function download_file(URL,Folder) {//, type:'merge'
 		var sync = ContentSync.sync({ src: URL, id: Folder, type:'merge', timeout:144000000 });
 		sync.on('progress', function(data) {
@@ -177,7 +228,7 @@
 		});
 
 	}
-
+*/
 
 /////END DOWNLOAD////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -219,8 +270,10 @@
 			<span class="progress-bar-percent" style="width: 0%;border-radius: 1px;top: -1px;position: relative;"></span>
 			<div id="descripion" style="display:none;">
 				<div class="first">Download</div> <div class="hajm">315 mb</div>
+				<br/>
+				<div id="error"></div>
 			</div>
-			<div id="abort_box"><input type="button" id="abort" value="Cancel" /></div>
+			<!-- <div id="abort_box"><input type="button" id="abort" value="Cancel" /></div> -->
 		</div>
 	</div>
 
