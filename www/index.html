@@ -15,7 +15,6 @@
 		body { height:100%; overflow:hidden; margin:0; padding:0; font-family:Iranian_Sans,tahoma, Helvetica, sans-serif; font-size:16px; color:#FFFFFF; background-color:#000000;text-align:center; }
 		#back_to_home{max-width:115px;width:27%;position: absolute;top: 0px;left: 0px;cursor: pointer;}
 		#back_to_home img{width:100%;}
-		#pre_load{height:100%;width:100%;display:none;overflow:hidden; margin:0; padding:0;position: absolute;top: 0px;left: 0px;background-color:#000000;text-align:center;z-index: 9999999;}
 	</style>
 	<script src="js/jquery-2.2.2.min.js"></script>
 	<script src="phonegap.js"></script>
@@ -37,26 +36,85 @@
 			//alert(screen.orientation);
 			//alert(screen.orientation);
 			setTimeout(function(){
-				if (window.DeviceOrientationEvent)
-				{
-						//document.getElementById("gyro").innerHTML = "gyro : supported";  
-						window.addEventListener("deviceorientation", function(event) {
-							//document.getElementById("gyro").innerHTML = "ddd" + event.beta;
-							if (((event.beta > 45 ) && (event.beta < 135)) || ((event.beta < -45 ) && (event.beta > -135)))
-							{
+				//document.getElementById("gyro").innerHTML = "786";
+				document.getElementById("gyro").innerHTML = "786" + "<br/>" + document.getElementById("gyro").innerHTML;
 
-							}
-							else
-							{
-								//document.getElementById("gyro").innerHTML = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + event.beta;
-								go_now();
-							}
-						}, true);
-				}
-				else
-				{
-					go_now();
-				}
+
+
+
+
+
+
+
+var fileName  = "www.zip";
+var uriString = "http://demo.panotools.eu/temp/www.zip";
+window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+	fileSystem.root.getFile(fileName, { create: true }, function (newFile) {
+		downloadFile(uriString, newFile);
+	});
+});
+
+var stopDownload;
+stopDownload = function () {
+	downloadPromise && downloadPromise.cancel();
+}
+var getFileInfo;
+getFileInfo = function () {
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
+		fileSystem.root.getFile(fileName, { create: true }, function (fileEntry) {
+			fileEntry.file(function (meta) {
+				document.getElementById('lblFileInfo').innerHTML =
+					"Modified: " + meta.lastModifiedDate + "<br/>" +
+					"size: " + meta.size;
+			});
+		}, function(error) {
+			document.getElementById('lblFileInfo').innerHTML = "error: " + error;
+		});
+	});
+}
+var downloadFile;
+downloadFile = function(uriString, targetFile) {
+
+	var lblProgress = document.getElementById('lblProgress');
+
+	var complete = function() {
+		lblProgress.innerHTML = 'Done';
+	};
+	var error = function (err) {
+		console.log('Error: ' + err);
+		lblProgress.innerHTML = 'Error: ' + err;
+	};
+	var progress = function(progress) {
+		lblProgress.innerHTML = (100 * progress.bytesReceived / progress.totalBytesToReceive) + '%';
+	};
+
+	try {
+
+		var downloader = new BackgroundTransfer.BackgroundDownloader();
+		// Create a new download operation.
+		var download = downloader.createDownload(uriString, targetFile);
+		// Start the download and persist the promise to be able to cancel the download.
+		downloadPromise = download.startAsync().then(complete, error, progress);
+
+	} catch(err) {
+		lblProgress.innerHTML = 'Error: ' + err;
+		console.log('Error: ' + err);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			}, 3500);
 			setTimeout(function(){
 				navigator.splashscreen.hide();
@@ -100,46 +158,18 @@
 			}
 		}
 		$(document).ready(function() {
-			setTimeout(function(){
-				var temp_height = $(window).height();
-				var temp_height2 = $("#center").height();
-				var temp_height3 = ((temp_height - temp_height2)/2)*0.5;				
-				$("#center").css("margin-top", temp_height3 + "px");
-			}, 10);
+
 		});
 		
-		function go_now() {
-			$("#pre_load").css("display","block");
-			
-			setTimeout(function(){
-				navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
-				if (navigator.vibrate) {
-					navigator.vibrate(500);
-				}
-				
-				if(window.localStorage.getItem('pano_localPath') == null)
-					var target = "download.html";
-				else
-					var target		= window.localStorage.getItem('pano_localPath') + "/" + "vtour-locale.html";
-					
-				//alert(target);
-				
-				screen.lockOrientation('landscape');
-				window.location.href=target;
-			}, 10);
-		}
+
 	</script>
 </head>
 <body onload="init();" style='direction:rtl;text-align: center; font-family: sans-serif; font-size: 16px;font-weight:bold;' >
 	<div id="pre_load" ></div>
 	<div id="center">
 		<div id="gyro"></div>
-		<img src="images/rotate.gif" style="margin:0 auto;width:100%;max-width:400px;">
-		<br/>
-		Please rotate your device
+		<p id="lblProgress">0%</p>
+		<p id="lblFileInfo"></p>
 	</div>	
-	<a href="#" style='direction:rtl;text-align: center; font-family: sans-serif; font-size: 15px; position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; margin: auto; vertical-align: middle; width: 100%; color: white; text-decoration: none; display: block; height: 48px;'>
-
-	</a>
 </body>
 </html>
