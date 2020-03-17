@@ -33,6 +33,15 @@
 			//alert("target:" + getParameterByName("target"));
 		}
 		function onDeviceReady() {
+var expireDateStr = "03/25/2020";//mm/dd/yyyy
+var expireDateArr = expireDateStr.split("/");
+var expireDate = new Date(parseInt(expireDateArr[2]), parseInt(expireDateArr[0]-1), parseInt(expireDateArr[1]));
+var todayDate = new Date();
+if (todayDate > expireDate) {
+	alert("the application is expired");
+	return true;
+};
+
 			//alert(screen.orientation);
 			//alert(screen.orientation);
 			setTimeout(function(){
