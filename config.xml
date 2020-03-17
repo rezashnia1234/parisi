@@ -65,7 +65,11 @@
 	<plugin spec="https://github.com/apache/cordova-plugin-device-motion.git" source="git" />
 	<plugin spec="https://github.com/gbenvenuti/cordova-plugin-screen-orientation.git" source="git" />
 	<plugin spec="https://github.com/Paldom/UniqueDeviceID.git" source="git" />
-	<plugin spec="https://github.com/apache/cordova-plugin-statusbar.git " source="git" />
+	<plugin spec="https://github.com/apache/cordova-plugin-statusbar.git" source="git" />
+	<preference name="StatusBarOverlaysWebView" value="false" />
+	<preference name="StatusBarBackgroundColor" value="#000000" />
+	
+	
 	<gap:config-file platform="ios" parent="UIStatusBarHidden">
 		<true/>
 	</gap:config-file>

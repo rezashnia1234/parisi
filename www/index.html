@@ -44,7 +44,10 @@
 					var target = "download.html";
 					window.location.href=target;
 				}else{
+					alert("test 1 : " + cordova.plugins.backgroundMode.isActive(););
 					cordova.plugins.backgroundMode.disable();
+					cordova.plugins.backgroundMode.setEnabled(false);
+					alert("test 2 : " + cordova.plugins.backgroundMode.isActive(););
 					var target = window.localStorage.getItem('download_address') + "/" + "vtour-locale.html";
 					window.location.href=target;
 				}

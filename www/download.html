@@ -131,20 +131,30 @@
 				downloadFile = function(uriString, targetFile) {
 
 					var complete = function() {
-						$('#text').html("Done");
-														zip.unzip( window.localStorage.getItem('download_address') + '/www.zip', window.localStorage.getItem('download_address') + '/', function(d) {
-															//alert(d);
-															cordova.plugins.backgroundMode.disable();
-															window.localStorage.setItem('download_done','yes');
-															var target = window.localStorage.getItem('download_address') + "/" + "vtour-locale.html";
-															//alert(target);
-															window.location.href=target;
-														}, function(d) {
-															perc = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-															//$('#text').html(perc + "%");
-															$('#text').html("Extracting " + perc + "%");
-															$('.progress-bar-percent').css('width',perc + "%");
-														});
+						$('#text').html("Extracting...");
+						var StatusCallback = function(status){
+							if(status == 0){
+								alert("Extracting is finished");
+								/*
+								cordova.plugins.backgroundMode.disable();
+								cordova.plugins.backgroundMode.setEnabled(false);
+
+								window.localStorage.setItem('download_done','yes');
+								var target = window.localStorage.getItem('download_address') + "/" + "vtour-locale.html";
+								//alert(target);
+								window.location.href=target;
+								*/
+							}else if(status == -1){
+								$('#text').html("Please re-try");
+							}
+						};
+						var ProgressCallback = function(progressEvent){
+							perc = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+							//$('#text').html(perc + "%");
+							$('#text').html("Extracting " + perc + "%");
+							$('.progress-bar-percent').css('width',perc + "%");
+						};
+						zip.unzip( window.localStorage.getItem('download_address') + '/www.zip', window.localStorage.getItem('download_address') + '/', StatusCallback, ProgressCallback);
 					};
 					var error = function (err) {
 						console.log('Error: ' + err);
@@ -160,7 +170,7 @@
 
 						var downloader = new BackgroundTransfer.BackgroundDownloader();
 						// Create a new download operation.
-						var download = downloader.createDownload(uriString, targetFile);
+						var download = downloader.createDownload(uriString, targetFile,,'Ballenesque 360/vr');
 						// Start the download and persist the promise to be able to cancel the download.
 						downloadPromise = download.startAsync().then(complete, error, progress);
 
