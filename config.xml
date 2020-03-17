@@ -59,7 +59,7 @@
 	<plugin spec="https://github.com/fiscal-cliff/phonegap-plugin-brightness.git" source="git" />
 	<plugin spec="https://github.com/phonegap/phonegap-plugin-contentsync" source="git" />
 	<plugin spec="https://github.com/sgrebnov/cordova-plugin-background-download.git" source="git" />
-	<plugin spec="https://stackoverflow.com/questions/26880706/unzip-file-in-android-using-phonegap.git" source="git" />
+	<plugin spec="https://github.com/MobileChromeApps/cordova-plugin-zip.git" source="git" />
 	
 	<preference name="android-build-tool" value="gradle" />
 	<plugin spec="https://github.com/apache/cordova-plugin-device-motion.git" source="git" />
