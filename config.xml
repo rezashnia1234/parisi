@@ -58,7 +58,8 @@
 	
 	<plugin spec="https://github.com/fiscal-cliff/phonegap-plugin-brightness.git" source="git" />
 	<plugin spec="https://github.com/phonegap/phonegap-plugin-contentsync" source="git" />
-
+	<plugin spec="https://github.com/sgrebnov/cordova-plugin-background-download.git" source="git" />
+	
 	<preference name="android-build-tool" value="gradle" />
 	<plugin spec="https://github.com/apache/cordova-plugin-device-motion.git" source="git" />
 	<plugin spec="https://github.com/gbenvenuti/cordova-plugin-screen-orientation.git" source="git" />
