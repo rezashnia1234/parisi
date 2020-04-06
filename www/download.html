@@ -163,8 +163,19 @@
 					};
 					var progress = function(progress) {
 						perc = Math.ceil(100 * progress.bytesReceived / progress.totalBytesToReceive);
+						if(isNaN(perc))
+						{
+							$('#text').html("Estimating Remaining Tasks");
+						}
+						else
+						{
+							$('#text').html(perc + "%");
+							$('.progress-bar-percent').css('width',perc + "%");
+						}
+						/*
 						$('#text').html(perc + "%");
 						$('.progress-bar-percent').css('width',perc + "%");
+						*/
 					};
 
 					try {
