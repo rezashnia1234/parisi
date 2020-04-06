@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.gramolini.ballenesque"
+        id        = "com.gramolini.ballenesque2"
         version   = "1.10" >
 		
 		
-    <name>Ballenesque 360/vr</name>
+    <name>Ballenesque II 360/vr</name>
     <description></description>
     <author href="" email="">Hamid</author>
     <!--
